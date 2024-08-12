@@ -5,7 +5,7 @@ import re
 from datetime import datetime
 
 # Replace with your NASA/ADS API key
-API_KEY = None
+API_KEY =  None
 library_id = 'PK0RWOWOTIKWfo-5Fck9sg'  # Replace with your actual library ID
 
 journal_short = {'Monthly Notices of the Royal Astronomical Society': 'MNRAS', 'The Astrophysical Journal': 'ApJ', 'Astronomy & Astrophysics': 'A\&A', 'European Physical Journal Plus': 'EPJ+', 'Nature': 'Nature', 'The Astronomical Journal': 'AJ'}
@@ -194,7 +194,7 @@ def generate_latex(publications):
                 print('REJECTED:', pub['title'], journal)
     return doc
 
-if__name__=='__main__':
+if __name__=='__main__':
 	publications = fetch_publications(library_id)
 	latex_doc = generate_latex(publications)
 	latex_doc.generate_pdf('publications', clean_tex=False)
