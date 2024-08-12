@@ -35,7 +35,6 @@ def fetch_publications(library_id):
         pub_response.raise_for_status()
         pub_data = pub_response.json()
         
-        print(bibcode)
         
         if pub_data['response']['docs']:
             pub_info = pub_data['response']['docs'][0]
@@ -56,21 +55,8 @@ def fetch_publications(library_id):
             nauthors = pub_info.get('author_count', 0)
             # Combine year and month into a single date string
             
-           
-            """if month:
-                date = f"{datetime.strptime(month, '%m').strftime('%b')} {year}"
-            else:
-                date = year"""
-            
             if date!='':
                  date = reformat_date(date)
-                 
-            print('\n\n ******\n')
-            print(title)
-            print(date, journal)
-            print(volume, page)
-            print(doi)
-            
 
             publications.append({
                 'title': title,
