@@ -12,6 +12,21 @@ journal_short = {'Monthly Notices of the Royal Astronomical Society': 'MNRAS', '
 
 
 accept_journals = ['MNRAS', 'ApJ', 'A\&A','EPJ+', 'Nature','AJ', 'arXiv e-prints']
+def normalize_pages(val):
+    """Return page info as a single string."""
+    if not val:
+        return ""
+    if isinstance(val, list):
+        if len(val) == 2:
+            return f"{val[0]}-{val[1]}"
+        elif len(val) >= 1:
+            return str(val[0])
+        else:
+            return ""
+    if isinstance(val, str):
+        # Ensure no weird whitespace around dashes
+        return re.sub(r"\s*[-–]\s*", "-", val.strip())
+    return str(val)
 
 # Function to fetch publications from NASA/ADS API
 def fetch_publications(library_id):
@@ -45,9 +60,13 @@ def fetch_publications(library_id):
                  journal = journal_short[journal]
             reference = pub_info.get('reference', [''])
             volume =  pub_info.get('volume', [''])
-            page =  pub_info.get('page_range', '')
-            if page=='':
-                 page= pub_info.get('page', '')[0]
+            page = normalize_pages(pub_info.get("page_range"))
+            if not page:
+                page = normalize_pages(pub_info.get("page"))
+
+
+            print(title, page)
+
             doi = pub_info.get('doi', [''])[0]
             year = pub_info.get('year', '')
             date = pub_info.get('pubdate', '')
